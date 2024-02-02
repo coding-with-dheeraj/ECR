@@ -1,0 +1,206 @@
+<div class="container overflow-hidden text-center">
+  <div class="row">
+    <div>
+      <br>
+    </div>
+    <!--Heading-->
+    <div class="lead">
+    <div class="display-4">Step 1</div>
+    <p>Set your travel itinerary</p>
+    <div>
+      <p><ngb-progressbar [value]="250"></ngb-progressbar></p>
+    </div>
+    </div>
+    <br>
+    <br>
+        <div class="col-9">
+            <div class="display-6">Pick- up</div>
+        </div>
+
+<form [formGroup]="HomeForm" (ngSubmit)="onSubmit()">
+    <!--Pickup Location-->
+    <div class="row gy-2">
+      <div class="col-4">
+        <div class="p-3">
+            
+          <div class ="row">
+            <div class="col-10 mb-4 ">
+              <div class ="form-group">
+              <label class="form-label" for="PickupLocation" style="margin-left: 0px;">Select your pick up location</label>
+              <input 
+              name="PickupLocation"
+              formControlName="PickupLocation"
+              class="form-control" 
+              ngx-google-places-autocomplete [options]='options' 
+              #placesRef="ngx-places" (onAddressChange)="AddressChange($event)"/>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!--Date Picker-->
+      <div class="col-4">
+        <div class="p-3">
+          <label class="form-label" for="DatePicker" style="margin-left: 0px;">Select your start and end date</label>
+        <form class="row row-cols-sm-auto">
+          <div class="col-12">
+            <div class="dp-hidden position-absolute">
+              <div class="input-group">
+                <input
+                  name="DatePicker"
+                  class="form-control"
+                  ngbDatepicker
+                  #datepicker="ngbDatepicker"
+                  [autoClose]="'outside'"
+                  (dateSelect)="onDateSelection($event)"
+                  [displayMonths]="2"
+                  [dayTemplate]="t"
+                  outsideDays="hidden"
+                  [startDate]="fromDate!"
+                  tabindex="-1"
+                />
+                <ng-template #t let-date let-focused="focused">
+                  <span
+                    class="custom-day"
+                    [class.focused]="focused"
+                    [class.range]="isRange(date)"
+                    [class.faded]="isHovered(date) || isInside(date)"
+                    (mouseenter)="hoveredDate = date"
+                    (mouseleave)="hoveredDate = null"
+                  >
+                    {{ date.day }}
+                  </span>
+                </ng-template>
+              </div>
+            </div>
+            <div class="input-group">
+              <input
+                #dpFromDate
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                name="DatePicker1"
+                [value]="formatter.format(fromDate)"
+                (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
+              />
+              <button class="btn btn-outline-dark bi bi-calendar3" (click)="datepicker.toggle()" type="button"></button>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="input-group">
+              <input
+                #dpToDate
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                name="DatePicker2"
+                [value]="formatter.format(toDate)"
+                (input)="toDate = validateInput(toDate, dpToDate.value)"
+              />
+              <button class="btn btn-outline-dark bi bi-calendar3" (click)="datepicker.toggle()" type="button"></button>
+            </div>
+          </div>
+        </form>
+        
+      </div>  
+      </div>
+
+      <!--Pickup Time-->
+      <div class="col-4">
+        <div class="p-3">
+          
+          <div class ="row">
+            <div class="col-10 mb-4">
+              <label class="form-label" for="PickupTime" style="margin-left: 0px;">Select your pick up time</label>
+              <select class="form-control" name="PickupTime" formControlName="PickupTime" >                  
+              <option value ="" disabled selected> Select Time</option> 
+              <option value="1">08:00 am</option>
+              <option value="2">09:00 am</option>
+              <option value="3">10:00 am</option>
+              <option value="4">11:00 am</option>
+              <option value="5">12:00 pm</option>
+              <option value="6">01:00 pm</option>
+              <option value="7">02:00 pm</option>
+              <option value="8">03:00 pm</option>
+              <option value="9">04:00 pm</option>
+              <option value="10">05:00 pm</option>
+              </select>                    
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div> 
+        <br>
+      </div>
+ 
+      <div class="col-9">
+        <div class="display-6">&nbsp; &nbsp;Drop- off</div>
+      </div>
+
+      <!--DropoffLocation -->
+      <div class="col-6">
+        <div class="p-3">
+          
+          <div class ="row">
+            <div class="col-6 mb-4 ">
+              <div class ="form-group">
+                <div class="map" id="gmp-map"></div>
+              <label class="form-label" for="DropoffLocation" style="margin-left: 0px;">Select your drop off location</label>
+              <input 
+              name="DropoffLocation"
+              type="text"
+              formControlName="DropoffLocation"
+              class="form-control"
+              ngx-google-places-autocomplete [options]='options' 
+              #placesRef="ngx-places" (onAddressChange)="AddressChange($event)" />
+              
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+      <!--Dropoff Time-->
+      <div class="col-6">
+        <div class="p-3">
+          
+          <div class ="row">
+            <div class="col-7 mb-4">
+              <label class="form-label" for="DropoffTime" style="margin-left: 0px;">Select your drop off time</label>
+              <select class="form-control" name="DropoffTime" formControlName="DropoffTime" >                  
+              <option value ="" disabled selected> Select Time</option> 
+              <option value="1">08:00 am</option>
+              <option value="2">09:00 am</option>
+              <option value="3">10:00 am</option>
+              <option value="4">11:00 am</option>
+              <option value="5">12:00 pm</option>
+              <option value="6">01:00 pm</option>
+              <option value="7">02:00 pm</option>
+              <option value="8">03:00 pm</option>
+              <option value="9">04:00 pm</option>
+              <option value="10">05:00 pm</option>
+              </select>                    
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div>
+        <br>
+      </div>
+
+      <!--Proceed Button-->
+      <div>
+        <button type="submit" class="btn btn-primary btn-lg" (click)="onSubmit()">Proceed</button>
+      </div>
+      <div>
+        <br>
+      </div>
+    </div>  
+</form>  
+</div>
+
+

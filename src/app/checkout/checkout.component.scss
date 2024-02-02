@@ -1,0 +1,36 @@
+.container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    width: 100%;
+    box-shadow: 2px 2px 10px #311B92;
+  }
+  
+
+  @media (max-width: 600px) {
+    .container {
+      flex-wrap: wrap; /* Allows the columns to wrap to a new row */
+    }
+    .col-4{
+      width: 100%; /* Each column takes up the full width of the container */
+      flex: none; /* Overrides the previous flex value */
+    }
+    .col-6{
+      width: 100%; 
+      flex: none; 
+    }
+  }
+
+  .row{
+    padding-left: 15px;
+    
+  }
+
+  .col-9{
+    text-align: left;
+}
+
+
+.form-check{
+  text-align: left;
+}
